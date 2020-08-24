@@ -3,5 +3,7 @@ coverImage.onclick = function(){
     alert('눌렀습니다.');
 };
 
-
+coverImage.onmouseover = function(){
+    coverImage.style.border = "5px black solid";
+};
 
