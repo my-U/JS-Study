@@ -4,10 +4,18 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>To do list</title>
+	<link rel="stylesheet" href="css/input.css">
 </head>
 <body>
 	<div id="wrapper">
-		
+		<h2>여행 준비물 점검 목록</h2> <!--제목-->
+		<form>
+			<input type="text" id="item" autofocus="true"> <!--입력용 테스트 필드-->
+			<button type="button" id="add" class="addBtn">추가</button>
+		</form>
+		<div id="itemList"></div> <!--준비물 목록이 표시될 영역-->
 	</div>    
+
+	<script src="checklist.js"></script>
 </body>
 </html>
