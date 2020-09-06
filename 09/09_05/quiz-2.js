@@ -11,4 +11,4 @@ goodSayings[8] = "착한 일은 작다 해서 아니하지 말고, 악한 일은
 goodSayings[9] = "자존심은 어리석은 자의 소유물이다";
 
 var i = Math.floor(Math.random() * 10);
-document.write("&quot;" + goodSayings[i] + "&quot;");
+document.write("<p>&quot;" + goodSayings[i] + "&quot;</p>");
