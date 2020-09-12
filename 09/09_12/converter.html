@@ -12,10 +12,10 @@
 		<h2>섭씨 &xhArr; 화씨 온도 변환기</h2>
 		<div class="change">  
 			<div class="box" id="source">
-				<input type="text" id="s-value">
+				<input type="text" id="s-value" onkeyup = "converter()">
 				<span class="unit" id="s-unit">&#8451;</span>
 			</div>
-			<span id="exchange"> &xhArr;  </span>
+			<span id="exchange" onclick="exChange()"> &xhArr;  </span>
 			<div class="box" id="target">
 				<input type="text" id="t-value">
 				<span class="unit" id="t-unit">&#8457;</span>
@@ -23,5 +23,6 @@
 		</div>		
 	</div>
 	
+	<script src="js/converter.js"></script>
 </body>
 </html>
