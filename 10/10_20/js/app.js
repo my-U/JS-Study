@@ -50,7 +50,7 @@
     const option = document.createElement('option')
     const select = document.querySelector('#input-service')
 
-    option.value = service.value
+    option.value = service.value // option의 value는 선택된 selectedService.value의 값이 됨
     option.textContent = service.title
 
     select.appendChild(option)
@@ -84,6 +84,27 @@
     }, 10000) // 10초 후 경고메세지 삭제
   }
   
+  //값이 유효할 때 계산하는 함수
+  function calculatetip(billAmount, usersAmount, selectedService) {
+    let tipPercent = ''
+    if(selectedService == '1') {
+      tipPercent = 0.2
+    }
+    if(selectedService == '2') {
+      tipPercent = 0.1
+    }
+    if(selectedService == '3') {
+      tipPercent = 0.02
+    }
+
+    const tipAmount = Number(billAmount) * tipPercent
+    const totalAmount = Number(billAmount) + Number(tipAmount)
+    const eachPerson = Number(totalAmount) / Number(usersAmount)
+
+    return [tipAmount, totalAmount, eachPerson] // 리스트 형태로 반환
+  }
+
+
   const inputForm = document.querySelector('form');
 
   inputForm.addEventListener('submit', function(e) { // 폼에서 값이 넘어가면
@@ -98,8 +119,38 @@
     let usersAmount = inputUsers.value
     let selectedService = serviceValue.value
 
+    //값이 유효하지 않을 경우 함수가 실행되어 isFeedback에 값이 저장됨
     const isFeedback = validateInput(billAmount, usersAmount, selectedService)
 
+    if(!isFeedback) {//값이 유효하지 않다면 isFeedback은 true가 되어 실행되지 않음
+      const loader = document.querySelector('.loader')//계산되는 동안 이미지가 보여지는 공간
+      const result = document.querySelector('.results')
+      const tipAmount = document.querySelector('#tip-amount')
+      const totalAmount = document.querySelector('#total-amount')
+      const personAmount = document.querySelector('#person-amount')
+
+      // 입력된 값을 계산하여 결과를 results에 저장
+      const results = calculatetip(billAmount, usersAmount, selectedService)
+
+      //로더를 보여줌
+      loader.classList.add('showItem')
+
+      setTimeout(function() {
+        loader.classList.remove('showItem')
+        tipAmount.textContent = `${results[0].toFixed(2)}.` // 소수 2번쨰 자리에서 반올림 후 숫자를 문자열로 변환
+        totalAmount.textContent = `${results[1].toFixed(2)}`
+        personAmount.textContent = `${results[2].toFixed(2)}`
+        result.classList.add('showItem') // loader가 사라지면 result가 계산 결과를 보여줌
+      }, 2000)
+
+      setTimeout(function() {
+        inputBill.value = '' // 입력창 초기화
+        inputUsers.value = ''
+        serviceValue.value = ''
+        result.classList.remove('showItem')
+      }, 10000)
+
+    }
     
   })
 
