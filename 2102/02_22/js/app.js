@@ -3,6 +3,8 @@ const $cart = document.querySelector("#cart");
 const $cartIcons = document.querySelectorAll(".store-item-icon");
 const $totalContainer = document.querySelector(".cart-total-container");
 const $totalPrice = document.querySelector("#cart-total");
+const $itemCount = document.querySelector("#item-count");
+const $itemTotal = document.querySelector(".item-total");
 
 function init() {
     $cartBtn.addEventListener('click', ShowCart);
@@ -25,8 +27,7 @@ const AddCartItem = ({target}) => {
       const imgSrc = SeletedImg.slice(pos);
 
       const SeletedItemName = target.parentElement.parentElement.nextElementSibling.children[0].children[0].textContent;
-      const SeletedItemPrice = target.parentElement.parentElement.nextElementSibling.children[0].children[1].textContent;
-      console.log(SeletedItemName);
+      const SeletedItemPrice = target.parentElement.parentElement.nextElementSibling.children[0].children[1].children[0].textContent;
       
       const cartTemplate = `
       <div class="cart-item d-flex justify-content-between text-capitalize my-3">
@@ -34,8 +35,8 @@ const AddCartItem = ({target}) => {
       <div class="cart-item-text">
       
       <p id="cart-item-title" class="font-weight-bold mb-0">${SeletedItemName}</p>
-      <span>${SeletedItemPrice}</span>
-      <span id="cart-item-price" class="cart-item-price" class="mb-0"></span>
+      <span>$</span>
+      <span id="cart-item-price" class="cart-item-price" class="mb-0">${SeletedItemPrice}</span>
       </div>
       <a href="#" id='cart-item-remove' class="cart-item-remove">
       <i class="fas fa-trash"></i>
@@ -45,7 +46,28 @@ const AddCartItem = ({target}) => {
       
       $totalContainer.insertAdjacentHTML('beforebegin', cartTemplate);
     }
-      
+
+    ShowTotal();
+}
+
+const ShowTotal = () => {
+  const $cartItemPrices = document.querySelectorAll(".cart-item-price");
+
+  const itemPriceList = [];
+  $cartItemPrices.forEach((cartITemPrice) => {
+    itemPriceList.push(parseFloat(cartITemPrice.textContent)); // 실수로 변환 후 배열에 저장
+  })
+
+  const totalPrice = itemPriceList.reduce((total, item) => {
+    total += item;
+    return total;
+  },0); // total의 초기 값을 0으로 초기화
+
+  const totalItemPrice = totalPrice.toFixed(2);
+
+  $totalPrice.textContent = totalItemPrice;
+  $itemTotal.textContent = totalItemPrice;
+  $itemCount.textContent = itemPriceList.length;
 }
 
 init();
