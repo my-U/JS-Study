@@ -1,9 +1,15 @@
 const $itemInput = document.querySelector("#input-value");
 const $feedback = document.querySelector(".feedback");
 const $itemList = document.querySelector(".list-items");
+const $deleteBtns = document.querySelectorAll(".remove-icon");
+const $clearBtn = document.querySelector(".clearBtn");
 
 function init() {
     $itemInput.addEventListener("keypress", addListItem);
+    $deleteBtns.forEach((deleteBtn) => {
+        deleteBtn.addEventListener("click", deleteItem);
+    });
+    $clearBtn.addEventListener("click", allItemClear);
 }
 
 const itemValueList = [];
@@ -38,6 +44,17 @@ const showList = (item) => {
     `;
 
     $itemList.insertAdjacentHTML("beforeend", listTemplate);
+}
+
+// const deleteItem = ({target}) => {
+//     if(target.parentElement.parentElement.classList.contains(".remove-icon")) {
+//         console.log(1);
+//     }
+//     // const itemName = deleteBtn.previousElementSibling;
+// }
+
+const allItemClear = () => {
+    $itemList.innerHTML = "";
 }
 
 init();
