@@ -2,18 +2,15 @@ const $form = document.querySelector("#input-form");
 const $itemInput = document.querySelector("#input-value");
 const $feedback = document.querySelector(".feedback");
 const $itemList = document.querySelector(".list-items");
-const $deleteBtns = document.querySelectorAll(".remove-icon");
 const $clearBtn = document.querySelector(".clearBtn");
 
 function init() {
     $form.addEventListener("submit", addListItem);
-    $deleteBtns.forEach(function(deleteBtn) {
-        deleteBtn.addEventListener("click", deleteItem);
-    })
+    $itemList.addEventListener("click", deleteItem);
     $clearBtn.addEventListener("click", allItemClear);
 }
 
-const itemValueList = [];
+let itemValueList = [];
 
 const addListItem = (e) => {
     e.preventDefault();
@@ -40,7 +37,15 @@ const showList = (item) => {
 
 const deleteItem = ({target}) => {
     if(target.parentElement.classList.contains("remove-icon")){
-        alert("aa");
+        const deletedItem = target.closest("div");
+        $itemList.removeChild(deletedItem);
+
+        // const itemName = target.parentElement.previousElementSibling.textContent;
+        itemValueList = itemValueList.filter((item) => { // 여기서 item은 itemValueList에 저장되어있는 데이터들
+            return item !== target.parentElement.previousElementSibling.textContent; // itemName과 일치하지 않는 item들을 걸러 itemValueList에 저장
+        });
+        
+        showList();
     }
 }
 
