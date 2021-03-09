@@ -16,10 +16,16 @@ const addListItem = (e) => {
     e.preventDefault();
     const itemValue = $itemInput.value;
     
-    if(itemValue.length > 0){
+    if(itemValue === '') {
+        const addClass = "alert-danger";
+        const text = "<p>Can not add empty value!</p>"
+        showFeedback(addClass, text);
+    }
+    else {
         itemValueList.push(itemValue);
         showList(itemValue);
         $itemInput.value = "";
+        showFeedback("alert-success", "Item added to the list!");
     }
 }
 
@@ -33,6 +39,15 @@ const showList = (item) => {
     `;
 
     $itemList.insertAdjacentHTML("beforeend", listTemplate);
+}
+
+const showFeedback = (newClass, text) => {
+        $feedback.classList.add(`${newClass}`, "showItem");
+        $feedback.innerHTML = `${text}`;
+
+        setTimeout(() => {
+            $feedback.classList.remove("showItem");
+        }, 3000);
 }
 
 const deleteItem = ({target}) => {
