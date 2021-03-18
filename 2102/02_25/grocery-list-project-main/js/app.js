@@ -31,14 +31,20 @@ const addListItem = (e) => {
 
 const showList = (item) => {
 
-    const listTemplate =  `
+    $itemList.innerHTML += `
     <div class="item my-3 d-flex justify-content-between p-2">
        <h5 class="item-title text-capitalize">${item}</h5>
        <span class="remove-icon text-danger"><i class="fas fa-trash"></i></span>
     </div>
     `;
+    // const listTemplate =  `
+    // <div class="item my-3 d-flex justify-content-between p-2">
+    //    <h5 class="item-title text-capitalize">${item}</h5>
+    //    <span class="remove-icon text-danger"><i class="fas fa-trash"></i></span>
+    // </div>
+    // `;
 
-    $itemList.insertAdjacentHTML("beforeend", listTemplate);
+    // $itemList.insertAdjacentHTML("beforeend", listTemplate);
 }
 
 const showFeedback = (newClass, text) => {
@@ -46,21 +52,22 @@ const showFeedback = (newClass, text) => {
         $feedback.innerHTML = `${text}`;
 
         setTimeout(() => {
-            $feedback.classList.remove("showItem");
+            $feedback.classList.remove("showItem", "alert-succsess", "alert-danger");
         }, 3000);
 }
 
 const deleteItem = ({target}) => {
     if(target.parentElement.classList.contains("remove-icon")){
-        const deletedItem = target.closest("div");
+        const deletedItem = target.parentElement.parentElement;
         $itemList.removeChild(deletedItem);
+
+        console.log(deletedItem);
 
         // const itemName = target.parentElement.previousElementSibling.textContent;
         itemValueList = itemValueList.filter((item) => { // 여기서 item은 itemValueList에 저장되어있는 데이터들
             return item !== target.parentElement.previousElementSibling.textContent; // itemName과 일치하지 않는 item들을 걸러 itemValueList에 저장
         });
         
-        showList();
     }
 }
 
