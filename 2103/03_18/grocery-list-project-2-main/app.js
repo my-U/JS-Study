@@ -9,7 +9,8 @@ let itemValueList = [];
 function init() {
     $form.addEventListener("submit", addListItem);
     $groceryItemList.addEventListener("click", deleteItem);
-    $allClearItem.addEventListener("submit", allClear);
+    $groceryItemList.addEventListener("click", allClear);
+    // $allClearItem.addEventListener("submit", allClear);
 }
 
 const addListItem = (e) => {
@@ -49,9 +50,10 @@ const deleteItem = ({target}) => {
     }
 }
 
-const allClear = () => {
-    console.log(1);
-    $groceryItemList.innerHTML = "";
+const allClear = ({target}) => {
+    if(target.classList.contains("displayItems-clear")){
+        $groceryItemList.innerHTML = `<button type="submit" class="displayItems-clear">clear items</button>`;
+    }
 }
 
 init();
