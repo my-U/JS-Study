@@ -1,23 +1,29 @@
 const $form = document.querySelector("form");
 const $itemInput = document.querySelector(".addItems-input");
 const $groceryItemList = document.querySelector(".grocery-list");
+const $deleteBtns = document.querySelectorAll(".grocery-item__link");
+const $allClearItem = document.querySelector(".displayItems-clear");
 
 let itemValueList = [];
 
 function init() {
     $form.addEventListener("submit", addListItem);
+    $groceryItemList.addEventListener("click", deleteItem);
+    $allClearItem.addEventListener("submit", allClear);
 }
 
 const addListItem = (e) => {
     e.preventDefault();
 
     const inputValue = $itemInput.value;
+
     if(inputValue === "") {
         return 0;
     }
     else {
         itemValueList.push(inputValue);
         showListItem(inputValue);
+        $itemInput.value = "";
     }
 }
 
@@ -30,6 +36,22 @@ const showListItem = (inputValue) => {
             </a> 
         </div>
     `;
+}
+
+const deleteItem = ({target}) => {
+    if(target.parentElement.classList.contains("grocery-item__link")) {
+        const deleteBtn = target.closest("div");
+        $groceryItemList.removeChild(deleteBtn);
+
+        itemValueList.filter((item) => {
+            return item !== target.parentElement.previousSibling.textContent;
+        });
+    }
+}
+
+const allClear = () => {
+    console.log(1);
+    $groceryItemList.innerHTML = "";
 }
 
 init();
