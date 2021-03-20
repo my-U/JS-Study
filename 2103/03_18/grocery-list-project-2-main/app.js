@@ -47,10 +47,10 @@ const deleteItem = ({target}) => {
         const deleteBtn = target.closest("div");
         $groceryItemList.removeChild(deleteBtn);
         
-        itemValueList.filter((item) => {
+        itemValueList = itemValueList.filter((item) => {
             return item !== target.parentElement.previousSibling.previousSibling.textContent;
         });
-        // console.log(itemValueList);
+        console.log(itemValueList);
         $dltFeedback.classList.add("success");
         $dltFeedback.innerHTML = `<p>${target.parentElement.previousSibling.previousSibling.textContent} Removed From List</p>`;
         setTimeout(() => {
