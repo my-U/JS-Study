@@ -50,9 +50,10 @@ const deleteItem = ({target}) => {
         itemValueList = itemValueList.filter((item) => {
             return item !== target.parentElement.previousSibling.previousSibling.textContent;
         });
-        console.log(itemValueList);
+        
         $dltFeedback.classList.add("success");
         $dltFeedback.innerHTML = `<p>${target.parentElement.previousSibling.previousSibling.textContent} Removed From List</p>`;
+        
         setTimeout(() => {
             $dltFeedback.classList.remove("success");
         }, 3000);
